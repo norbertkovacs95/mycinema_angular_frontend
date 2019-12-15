@@ -1,0 +1,15 @@
+<p>movies works!</p>
+<div fxLayout="column" fxLayoutGap="30px">
+    <mat-card *ngFor = "let movie of movies" >
+        <mat-card-header>
+            <mat-card-title>
+                <h3>
+                    {{movie.title}}
+                </h3>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p> {{movie.synopsis}}</p>
+        </mat-card-content>
+    </mat-card>
+</div>
