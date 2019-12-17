@@ -1,15 +1,19 @@
-<p>movies works!</p>
-<div fxLayout="column" fxLayoutGap="30px">
-    <mat-card *ngFor = "let movie of movies" >
+
+<div fxLayout="row wrap"
+    fxLayout.sm="column"
+    fxLayout.xs="column"
+    fxLayoutAlign="space-around center">
+    <mat-card class="card" *ngFor = "let movie of movies">
         <mat-card-header>
-            <mat-card-title>
-                <h3>
-                    {{movie.title}}
-                </h3>
-            </mat-card-title>
+            <div mat-card-avatar class="header-image"></div>
+            <mat-card-title>{{movie.title}}</mat-card-title>
+            <mat-card-subtitle>{{movie.category}}</mat-card-subtitle>
         </mat-card-header>
+        <img mat-card-image src={{movie.posterPath}}>
         <mat-card-content>
-            <p> {{movie.synopsis}}</p>
+            <p>{{movie.synopsis}}</p>
         </mat-card-content>
     </mat-card>
 </div>
+
+

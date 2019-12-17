@@ -1,0 +1,16 @@
+
+.card {
+    max-width: 350px;
+    margin-bottom: 20px;
+    }
+
+
+  .header-image {
+    background-size: cover;
+  }
+
+img{
+    object-fit: cover; /*this makes the image in src fit to the size specified below*/
+    height: 450px;
+  }
+

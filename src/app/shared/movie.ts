@@ -3,6 +3,7 @@ export class Movie {
     title: string;
     director: string;
     synopsis: string;
+    category: string;
     duration: number;
     posterPath: string;
     uploadDate: string;
