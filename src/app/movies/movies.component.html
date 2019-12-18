@@ -1,19 +1,26 @@
-
-<div fxLayout="row wrap"
-    fxLayout.sm="column"
-    fxLayout.xs="column"
-    fxLayoutAlign="space-around center">
-    <mat-card class="card" *ngFor = "let movie of movies">
-        <mat-card-header>
-            <div mat-card-avatar class="header-image"></div>
-            <mat-card-title>{{movie.title}}</mat-card-title>
-            <mat-card-subtitle>{{movie.category}}</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image src={{movie.posterPath}}>
-        <mat-card-content>
-            <p>{{movie.synopsis}}</p>
-        </mat-card-content>
-    </mat-card>
+<div class="container-main">
+    <h1>Moives</h1>
+    <div fxLayout="row wrap"
+        fxLayout.sm="column"
+        fxLayout.xs="column"
+        fxLayoutAlign="space-around center">
+        <mat-card class="card" *ngFor = "let movie of movies">
+            <mat-card-header>
+                <div mat-card-avatar class="header-image" [style.backgroundImage]="'url('+ movie.pegiRating +')'"></div>
+                <mat-card-title>{{movie.title}}</mat-card-title>
+                <mat-card-subtitle>{{movie.category}} - {{movie.duration}} Min</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src={{movie.posterPath}}>
+            <mat-card-content>
+                <p>{{movie.synopsis}}</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button class="action-button" *ngFor="let time of movie.showTimes"mat-raised-button color="primary">{{time}}</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
 </div>
+
+
 
 

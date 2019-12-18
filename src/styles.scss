@@ -19,3 +19,33 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     flex: 1 1 auto;
   }
 
+.container-main{
+    min-height: 80%;
+    margin: 0px 70px 0px 70px;
+}
+
+@media (max-width: 978px) {
+    .container-main {
+      padding:0;
+      margin:0;
+    }
+
+    body {
+      padding:0;
+    }
+}
+app-root{
+    min-height: 100%;
+}
+
+app-movies{
+    min-height: 100%;
+}
+
+app-about{
+    min-height: 100%;
+}
+
+app-home{
+    min-height: 100%;
+}

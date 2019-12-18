@@ -4,8 +4,9 @@ export class Movie {
     director: string;
     synopsis: string;
     category: string;
+    pegiRating: string;
     duration: number;
     posterPath: string;
     uploadDate: string;
-    showTimes: number[];
+    showTimes: string[];
 }
