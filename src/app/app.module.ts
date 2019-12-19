@@ -16,7 +16,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import 'hammerjs';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -26,7 +29,11 @@ import { MoviesComponent } from './movies/movies.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { FooterComponent } from './footer/footer.component';
+import { ReservationComponent } from './reservation/reservation.component';
 
+import { HttpClientModule } from '@angular/common/http';
+import { MoviesService } from './services/movies.service';
+import { ShowtimesService } from './services/showtimes.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +42,8 @@ import { FooterComponent } from './footer/footer.component';
     MoviesComponent,
     HomeComponent,
     AboutComponent,
-    FooterComponent
+    FooterComponent,
+    ReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -55,9 +63,18 @@ import { FooterComponent } from './footer/footer.component';
     MatButtonModule,
     MatCardModule,
     MatGridListModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatTooltipModule,
+    MatSnackBarModule,
+    HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ReservationComponent
+]
 })
 export class AppModule { }

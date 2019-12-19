@@ -8,5 +8,5 @@ export class Movie {
     duration: number;
     posterPath: string;
     uploadDate: string;
-    showTimes: string[];
+    showTimes: number[];
 }

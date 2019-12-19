@@ -1,0 +1,66 @@
+<mat-toolbar color="primary">
+   <span>Ticket Reservation</span>
+  <span class="fill-space"></span>
+  <button mat-button mat-dialog-close>&times;</button>
+</mat-toolbar>
+
+<mat-tab-group #tabs>
+  <mat-tab label="Tickets" [disabled]="ticketsChoosen"> 
+    <div class="tab-content">
+        <h4>Please select your ticket type(s)</h4>
+        <form  fxLayoutGap="10px" novalidate [formGroup]="ticketForm" (ngSubmit)="onSubmitTicket()">
+            <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="10px">
+                <span class="label fa fa-graduation-cap fa-lg" fxFlex="5" matTooltip="People with valid student card"></span>
+                <label class="label" fxFlex="20" fxFlex.xs="25">1.250 HUF</label>
+                <mat-form-field fxFlex="column" fxFlex="55">
+                    <input fxFlex type="number" min="0" class="form-control" matInput name="value" placeholder="Number of stundet tickets"  formControlName="value" max="10" formControlName="student">
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="10px">
+                <span class="label fa fa-book fa-lg" fxFlex="5" matTooltip="People over 60"></span>
+                <label class="label" fxFlex="20" fxFlex.xs="25">1.250 HUF</label>
+                <mat-form-field fxFlex="column" fxFlex="55">
+                    <input fxFlex type="number" min="0" class="form-control" matInput name="value" placeholder="Number of elderly tickets"  formControlName="value" max="10" formControlName="elderly">
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="10px">
+                <span class="label fa fa-user fa-lg" fxFlex="5"></span>
+                <label class="label" fxFlex="20" fxFlex.xs="25">1.450 HUF</label>
+                <mat-form-field fxFlex="column" fxFlex="55">
+                    <input fxFlex type="number" min="0" class="form-control" matInput name="value" placeholder="Number of normal tickets"  formControlName="value" max="10" formControlName="normal">
+                </mat-form-field>
+            </div>
+            <p><label>Total price: {{totalPrice}} HUF</label></p>
+            <div class="wrapper">
+                <button mat-raised-button color="primary" [disabled]="!ticketFormValid" stlye="width: 30px !important;">Next</button>
+            </div>
+        </form>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Seats" [disabled]="!ticketsChoosen || seatsChoosen">
+   Content 2 
+   </mat-tab>
+  <mat-tab label="User information" [disabled]="!seatsChoosen">
+      <div class="tab-content">
+        <h4>Please provide your user information</h4>
+        <form  fxLayoutGap="10px" novalidate [formGroup]="userForm" (ngSubmit)="onSubmitUser()" fxLayout="column" fxLayoutAlign="center">
+            <mat-form-field fxFlex>
+                <input matInput placeholder="First Name" formControlName="firstName">
+                <mat-error *ngIf="formErrors.firstName">{{formErrors.firstName}}</mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+                <input matInput placeholder="Last Name" formControlName="lastName">
+                <mat-error *ngIf="formErrors.lastName">{{formErrors.lastName}}</mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+                <input matInput placeholder="Email" formControlName="email">
+                <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
+            </mat-form-field>
+            <div class="wrapper" fxFlex>
+                <button mat-raised-button color="primary" [disabled]="userForm.invalid" stlye="width: 30px !important;">Next</button>
+            </div>
+        </form>
+    </div>
+  </mat-tab>
+</mat-tab-group>

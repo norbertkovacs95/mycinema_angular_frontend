@@ -11,7 +11,7 @@ export const MOVIES: Movie[] = [
         "duration": 120,
         "posterPath": "./assets/images/Joker.jpg",
         "uploadDate": "2019-11-05T00:00:00",
-        "showTimes": ["15:00", "17:30", "19:20"]
+        "showTimes": [1,2,3]
     },
     {
         "id": 2,
@@ -23,7 +23,7 @@ export const MOVIES: Movie[] = [
         "duration": 110,
         "posterPath": "./assets/images/DoctorStrange.jpg",
         "uploadDate": "2019-11-06T00:00:00",
-        "showTimes": ["16:00", "19:30", "20:20"]
+        "showTimes": [4,5,6]
     },
     {
         "id": 3,
@@ -35,7 +35,7 @@ export const MOVIES: Movie[] = [
         "duration": 120,
         "posterPath": "./assets/images/NoTimeToDie.jpg",
         "uploadDate": "2019-11-07T00:00:00",
-        "showTimes": ["12:00", "17:30", "22:20"]
+        "showTimes": [7,8,9]
     }
     ,
     {
@@ -48,7 +48,7 @@ export const MOVIES: Movie[] = [
         "duration": 120,
         "posterPath": "./assets/images/Joker.jpg",
         "uploadDate": "2019-11-05T00:00:00",
-        "showTimes": ["15:00", "17:30", "19:20"]
+        "showTimes": [1,2,3]
     },
     {
         "id": 2,
@@ -60,7 +60,7 @@ export const MOVIES: Movie[] = [
         "duration": 110,
         "posterPath": "./assets/images/DoctorStrange.jpg",
         "uploadDate": "2019-11-06T00:00:00",
-        "showTimes": ["16:00", "19:30", "20:20"]
+        "showTimes": [4,5,6]
     },
     {
         "id": 3,
@@ -72,6 +72,6 @@ export const MOVIES: Movie[] = [
         "duration": 120,
         "posterPath": "./assets/images/NoTimeToDie.jpg",
         "uploadDate": "2019-11-07T00:00:00",
-        "showTimes": ["12:00", "17:30", "22:20"]
+        "showTimes": [7,8,9]
     }
 ]
