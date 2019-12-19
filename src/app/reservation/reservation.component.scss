@@ -1,5 +1,6 @@
 .tab-content {
     margin-top: 25px;
+    min-height: 250px;
 }
 
 .label{
@@ -14,4 +15,18 @@ button{
 
 .wrapper {
     text-align: center;
+}
+
+.checkbox{
+    width: 15px !important;
+    height: 13px !important;
+    margin: 5px;
+}
+
+.zero-margin{
+    margin: 0px !important;
+}
+
+.margin-top{
+    margin-top: 50px !important;
 }

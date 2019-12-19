@@ -7,6 +7,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 import { TicketTypes } from '../shared/ticketTypes';
 import { User } from '../shared/user';
+import { Seat } from '../shared/seat';
+import { CinemaHall } from '../shared/cinemaHall';
+import { ShowtimesService } from '../services/showtimes.service';
+import { SeatService } from '../services/seat.service';
+import { CinemahallService } from '../services/cinemahall.service';
 
 @Component({
   selector: 'app-reservation',
@@ -16,9 +21,12 @@ import { User } from '../shared/user';
 export class ReservationComponent implements OnInit {
 
   showTimeId: number;
+  cinemaHallId: number;
+
   ticketFormValid: boolean= false;
   ticketsChoosen: boolean = false;
-  seatsChoosen: boolean = true;
+  seatsChoosen: boolean = false;
+  seatsValid: boolean = false;
   totalPrice: number = 0;
 
   @ViewChild('tabs',{static: false}) tabGroup: MatTabGroup;
@@ -26,7 +34,12 @@ export class ReservationComponent implements OnInit {
   userForm: FormGroup;
   selectedTickets: TicketTypes;
   user: User;
+  seats: Seat[];
+  cinemaHall: CinemaHall;
+  rows: number[];
+  cols: number[];
   numberOfTickets: number;
+
   formErrors = {
     'firstName': '',
     'lastName': '',
@@ -46,7 +59,11 @@ export class ReservationComponent implements OnInit {
     }
   };
 
-  constructor(  private fb: FormBuilder,
+  constructor(
+    private showTimeService: ShowtimesService,
+    private seatService: SeatService,
+    private cinemaHallService: CinemahallService,
+    private fb: FormBuilder,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<ReservationComponent>,
     @Inject(MAT_DIALOG_DATA) data) {
@@ -55,7 +72,41 @@ export class ReservationComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.showTimeId);
+    this.showTimeService.getShowTime(String(this.showTimeId))
+      .subscribe((showTime)=> {
+        this.cinemaHallId = showTime.cinemaHall;
+        this.seatService.getSeatsByCinemaHall(String(this.cinemaHallId))
+          .subscribe((seats) => {
+            this.seats = seats;
+          })
+        this.cinemaHallService.getCinemaHall(String(this.cinemaHallId))
+          .subscribe((cinemaHall) => {
+            this.cinemaHall= cinemaHall;
+            this.rows = Array(cinemaHall.columnCount).fill(0).map((x,i)=>i);
+            this.cols = Array(cinemaHall.rowCount).fill(0).map((x,i)=>i);
+          })
+      });   
+  }
+
+  isSeatFree(col: number, row: number){
+    if(!this.seats){return;}
+
+    let seat: Seat = this.getSeat(col,row)
+    console.log(this.seats);
+
+    if(!seat){
+      console.log('row',row);
+      console.log("col",col);
+    }
+    if (seat.staus == "FREE") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getSeat (col:number, row:number):Seat {
+    return this.seats.filter((seat) => seat.columnNumber = col).filter(seat => seat.rowNumber=row)[0];
   }
 
   createForms() {
@@ -120,6 +171,9 @@ export class ReservationComponent implements OnInit {
       }
   }
 
+  onCheckboxChange(){
+    
+  }
 
   onSubmitTicket(){
     this.ticketsChoosen = true;

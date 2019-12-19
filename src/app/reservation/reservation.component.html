@@ -37,30 +37,43 @@
         </form>
     </div>
   </mat-tab>
-
   <mat-tab label="Seats" [disabled]="!ticketsChoosen || seatsChoosen">
-   Content 2 
-   </mat-tab>
-  <mat-tab label="User information" [disabled]="!seatsChoosen">
-      <div class="tab-content">
-        <h4>Please provide your user information</h4>
-        <form  fxLayoutGap="10px" novalidate [formGroup]="userForm" (ngSubmit)="onSubmitUser()" fxLayout="column" fxLayoutAlign="center">
-            <mat-form-field fxFlex>
-                <input matInput placeholder="First Name" formControlName="firstName">
-                <mat-error *ngIf="formErrors.firstName">{{formErrors.firstName}}</mat-error>
-            </mat-form-field>
-            <mat-form-field fxFlex>
-                <input matInput placeholder="Last Name" formControlName="lastName">
-                <mat-error *ngIf="formErrors.lastName">{{formErrors.lastName}}</mat-error>
-            </mat-form-field>
-            <mat-form-field fxFlex>
-                <input matInput placeholder="Email" formControlName="email">
-                <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
-            </mat-form-field>
-            <div class="wrapper" fxFlex>
-                <button mat-raised-button color="primary" [disabled]="userForm.invalid" stlye="width: 30px !important;">Next</button>
-            </div>
-        </form>
+    <div class="tab-content" fxLayout="column" *ngIf="cinemaHall && seats">
+        <h4 class="zero-margin">Please select seat(s)</h4>
+        <hr>
+        <table align="center">
+            <tr>
+                <th *ngFor = "let col of cols">{{col+1}}</th>
+            </tr>
+             <tr *ngFor = "let row of rows">
+                <td *ngFor = "let col of cols"><mat-checkbox class="checkbox" [disabled] = "!isSeatFree(col+1,row+1)"></mat-checkbox></td>
+            </tr>
+        </table>
+        <div class="wrapper margin-top" fxFlex >
+            <button mat-raised-button color="primary" [disabled]="!seatsValid" stlye="width: 30px !important;">Next</button>
+        </div>   
     </div>
-  </mat-tab>
+   </mat-tab>
+    <mat-tab label="User information" [disabled]="!seatsChoosen">
+        <div class="tab-content">
+            <h4>Please provide your user information</h4>
+            <form  fxLayoutGap="10px" novalidate [formGroup]="userForm" (ngSubmit)="onSubmitUser()" fxLayout="column" fxLayoutAlign="center">
+                <mat-form-field fxFlex>
+                    <input matInput placeholder="First Name" formControlName="firstName">
+                    <mat-error *ngIf="formErrors.firstName">{{formErrors.firstName}}</mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <input matInput placeholder="Last Name" formControlName="lastName">
+                    <mat-error *ngIf="formErrors.lastName">{{formErrors.lastName}}</mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <input matInput placeholder="Email" formControlName="email">
+                    <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
+                </mat-form-field>
+                <div class="wrapper" fxFlex>
+                    <button mat-raised-button color="primary" [disabled]="userForm.invalid" stlye="width: 30px !important;">Next</button>
+                </div>
+            </form>
+        </div>
+    </mat-tab>
 </mat-tab-group>
