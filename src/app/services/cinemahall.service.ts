@@ -19,7 +19,6 @@ export class CinemahallService {
     return this.http.get<CinemaHall[]>(baseURL + 'cinemahalls');
   }
 
-
   getCinemaHall(id: string): Observable<CinemaHall> {
     return this.http.get<CinemaHall>(baseURL + 'cinemahalls/' + id);
   }

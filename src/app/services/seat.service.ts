@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Seat } from 'src/app/shared/seat';
 import { Observable, of} from 'rxjs';
-import { delay, catchError } from 'rxjs/operators';
-
-import { map } from 'rxjs/operators';
+import { map } from 'rxjs/operators'; 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseURL } from '../shared/baseurl';
 
@@ -18,9 +16,9 @@ export class SeatService {
     return this.http.get<Seat[]>(baseURL + 'seats');
   }
 
-
-  getSeatsByCinemaHall(id: string): Observable<Seat[]> {
-    return this.http.get<Seat[]>(baseURL + 'seats?cinemaHall=' + id);
+  getSeatsForShowTime(cinemaHall:string, showTime:string): Observable<Seat[]> {
+    return this.http.get<Seat[]>(baseURL)
+      .pipe(map(seats => seats.filter(seat => seat.cinemaHall === cinemaHall && seat.showTime === showTime)));
   }
 
   putSeat(seat: Seat): Observable<Seat> {
@@ -29,7 +27,7 @@ export class SeatService {
         'Content-Type': 'application/json'
       })
     };
-    return this.http.put<Seat>(baseURL + 'seats/' + seat.id, seat, httpOptions);
+    return this.http.put<Seat>(baseURL + 'seats/' + seat._id, seat, httpOptions);
   }
 
 }

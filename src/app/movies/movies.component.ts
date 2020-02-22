@@ -7,6 +7,10 @@ import { ReservationComponent } from '../reservation/reservation.component';
 
 import {  MoviesService } from '../services/movies.service';
 import {  ShowtimesService } from '../services/showtimes.service';
+import {  CinemahallService } from '../services/cinemahall.service';
+import {  SeatService } from '../services/seat.service';
+import { CinemaHall } from '../shared/cinemaHall';
+import { Seat } from '../shared/seat';
 
 @Component({
   selector: 'app-movies',
@@ -21,15 +25,17 @@ export class MoviesComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private moviesService: MoviesService,
-    private showTimesService: ShowtimesService
+    private showTimesService: ShowtimesService,
+    private cinemaHallService : CinemahallService,
+    private seatService: SeatService
     ) { }
 
   ngOnInit() {
 
     this.showTimesService.getShowTimes()
-    . subscribe((showTimes) => {
-        this.showTimes = showTimes;
-    });
+      .subscribe((showTimes) => {
+          this.showTimes = showTimes;
+      });
 
     this.moviesService.getMovies()
       .subscribe((movies) => {
@@ -38,14 +44,30 @@ export class MoviesComponent implements OnInit {
       
   }
 
-  returnShowTime(id: number): string {
-    return this.showTimes.filter((showTime) => showTime.id = id)[0].startDate;
+  returnShowTime(id: string): string {
+    return this.showTimes.filter((showTime) => showTime._id == id)[0].startDate;
   }
 
-  openReservationForm(id: number) {
-    this.dialog.open(ReservationComponent, {width: '750px', height: '520px',data:{
-      showtimeId: id
-    }});
+  openReservationForm(id: string) {
+
+    let showTime:ShowTime = this.showTimes.filter((showtime) => showtime._id == id)[0];
+    let cinemaHall: CinemaHall;
+    let seats: Seat[];
+
+    this.cinemaHallService.getCinemaHall(showTime["cinemeHall"])
+      .subscribe((_cinemaHall) => {
+        cinemaHall = _cinemaHall;
+        this.seatService.getSeats()
+          .subscribe((_seats) => {
+            _seats = _seats.filter(seat => seat.showTime == showTime._id);
+            seats = _seats;
+            this.dialog.open(ReservationComponent, {width: '750px', height: '520px',data:{
+              showtime: showTime,
+              cinemaHall: cinemaHall,
+              seats: seats
+            }});
+        })
+      })
   }
 
 }

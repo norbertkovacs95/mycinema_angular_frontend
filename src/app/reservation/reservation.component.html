@@ -32,7 +32,7 @@
             </div>
             <p><label>Total price: {{totalPrice}} HUF</label></p>
             <div class="wrapper">
-                <button mat-raised-button color="primary" [disabled]="!ticketFormValid" stlye="width: 30px !important;">Next</button>
+                <button mat-raised-button color="primary" [disabled]="!ticketFormValid" class="button">Next</button>
             </div>
         </form>
     </div>
@@ -42,15 +42,14 @@
         <h4 class="zero-margin">Please select seat(s)</h4>
         <hr>
         <table align="center">
-            <tr>
-                <th *ngFor = "let col of cols">{{col+1}}</th>
-            </tr>
-             <tr *ngFor = "let row of rows">
-                <td *ngFor = "let col of cols"><mat-checkbox class="checkbox" [disabled] = "!isSeatFree(col+1,row+1)"></mat-checkbox></td>
+             <tr *ngFor = "let row of rows; let i = index">
+                <th>{{i+1}}</th>
+                <td *ngFor = "let col of cols; let ii = index"><mat-checkbox class="checkbox" [disabled] = "!isSeatFree(ii+1,i+1)" 
+                (change)="setRowCor(ii+1,i+1); onCheckboxChange($event)" id="{{ 'seat' + i + ii }}" [checked]="seatsChoosen[i+1][ii]"></mat-checkbox></td>
             </tr>
         </table>
         <div class="wrapper margin-top" fxFlex >
-            <button mat-raised-button color="primary" [disabled]="!seatsValid" stlye="width: 30px !important;">Next</button>
+            <button mat-raised-button color="primary" [disabled]="!seatsValid" class="button" (click) ="onSubmitSeats()">Next</button>
         </div>   
     </div>
    </mat-tab>
@@ -71,7 +70,7 @@
                     <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
                 </mat-form-field>
                 <div class="wrapper" fxFlex>
-                    <button mat-raised-button color="primary" [disabled]="userForm.invalid" stlye="width: 30px !important;">Next</button>
+                    <button mat-raised-button color="primary" [disabled]="userForm.invalid" class="button">Next</button>
                 </div>
             </form>
         </div>

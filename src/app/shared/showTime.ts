@@ -1,6 +1,6 @@
 export class ShowTime {
-    id: number;
+    _id: string;
     startDate: string;
-    cinemaHall: number;
-    movie: number;
+    cinemaHall: string;
+    movie: string;
 }

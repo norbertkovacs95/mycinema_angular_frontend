@@ -1,8 +1,7 @@
 export class CinemaHall {
-    id: number;
+    _id: string;
     name: string;
     rowCount: number;
     columnCount: number;
-    seats: number[];
-    showTimes: number[];
+    sections: number;
 }

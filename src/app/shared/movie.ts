@@ -1,5 +1,5 @@
 export class Movie {
-    id: number;
+    _id: string;
     title: string;
     director: string;
     synopsis: string;
@@ -8,5 +8,5 @@ export class Movie {
     duration: number;
     posterPath: string;
     uploadDate: string;
-    showTimes: number[];
+    showTimes: string[];
 }

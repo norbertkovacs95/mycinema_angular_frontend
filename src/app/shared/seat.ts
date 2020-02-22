@@ -1,8 +1,10 @@
 export class Seat {
-    id: number;
-    rowNumber: number;
-    columnNumber: number;
-    staus: string;
-    cinemaHall: number;
-    userID:string;
+    _id: number;
+    row: number;
+    column: number;
+    status: string;
+    cinemaHall: string;
+    user:string;
+    showTime: string;
+    section: number;
 }
