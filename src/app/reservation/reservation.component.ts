@@ -10,6 +10,8 @@ import { User } from '../shared/user';
 import { Seat } from '../shared/seat';
 import { ShowTime } from '../shared/showTime';
 import { CinemaHall } from '../shared/cinemaHall';
+import { Section } from '../shared/section';
+
 import { SeatService } from '../services/seat.service';
 
 @Component({
@@ -36,10 +38,11 @@ export class ReservationComponent implements OnInit {
   seats: Seat[];
   showTime: ShowTime;
   cinemaHall: CinemaHall;
+  sections: Section[];
   seatCheckboxes;
   choosenSeats: Seat[] = [];
-  rows: number[];
-  cols: number[];
+  rows = [];
+  cols = [];
   curCol: number;
   curRow: number;
   numberOfTickets: number;
@@ -49,6 +52,7 @@ export class ReservationComponent implements OnInit {
     'firstName': '',
     'lastName': '',
     'email': '',
+    'phone': ''
   };
 
   validationMessages = {
@@ -61,6 +65,10 @@ export class ReservationComponent implements OnInit {
     'email': {
       'required':'Email is required.',
       'email': 'Email must be in correct format'
+    },
+    'phone' : {
+      'required':'Phone number is required.',
+      'phone': 'Phone number must be in correct format'
     }
   };
 
@@ -77,13 +85,15 @@ export class ReservationComponent implements OnInit {
       this.cinemaHallId = data.showtime.cinemaHall
       this.seats = data.seats;
       this.cinemaHall= data.cinemaHall;
-      
-      let row = this.cinemaHall.rowCount;
-      let col = this.cinemaHall.columnCount;
+      this.sections = data.sections;
 
-      this.rows = Array(row).fill(0);
-      this.cols = Array(col).fill(0);
-      
+      for (const section of this.sections) {
+        let row = section.rowCount;
+        let col = section.columnCount;
+        this.rows.push(Array(row).fill(0));
+        this.cols.push(Array(col).fill(0));
+      }
+
       this.seatCheckboxes = [];
       for (let i = 0; i < this.cinemaHall.rowCount; i++) {
         let colArr = [];
@@ -92,8 +102,6 @@ export class ReservationComponent implements OnInit {
         }
         this.seatCheckboxes.push(colArr);
       }
-      console.log(this.seatCheckboxes);
-      console.log(this.seats);
   }
 
   ngOnInit() {
@@ -129,7 +137,8 @@ export class ReservationComponent implements OnInit {
     this.userForm = this.fb.group({
       firstName:  ['',[Validators.required]],
       lastName: ['',[Validators.required]],
-      email: ['',[Validators.required, Validators.email]]
+      email: ['',[Validators.required, Validators.email]],
+      phone: ['', [Validators.required]]
     });
 
     this.ticketForm.valueChanges
@@ -138,7 +147,6 @@ export class ReservationComponent implements OnInit {
 
     this.userForm.valueChanges
       .subscribe(data => this.onValueChangedUser(data));
-
   }
 
   onValueChangedTicket(data?: any) {
@@ -195,12 +203,13 @@ export class ReservationComponent implements OnInit {
       this.choosenSeats.push(this.getSeat(col,row));
       this.seatCheckboxes[row-1][col-1] = true;
 
-      if(this.numberOfSeats > this.numberOfTickets) { 
+      if (this.numberOfSeats > this.numberOfTickets) { 
         let colNum = this.choosenSeats[0].column -1;
         let rowNum = this.choosenSeats[0].row - 1;
 
-        document.getElementById(`seat${rowNum}${colNum}`).getElementsByTagName('input')[0].checked = false;
-        this.choosenSeats.shift(); 
+        this.seatCheckboxes[rowNum][colNum] = false;
+        this.choosenSeats.shift();
+        this.numberOfSeats -= 1
       }
     } 
     else {
@@ -234,14 +243,16 @@ export class ReservationComponent implements OnInit {
   }
 
   onSubmitUser(){
-    this.snackBar.open('Reservation is successfull. Email sent to your address!', 'Close', {
-      duration: 5000
-    });
-  for (const seat of this.choosenSeats) {
-    seat.status = "TAKEN"
-    this.seatService.putSeat(seat).subscribe((seat) => console.log(seat,'put'))
-  }
-    this.dialogRef.close();
+    for (const seat of this.choosenSeats) {
+      seat.status = "TAKEN"
+    }
+    this.seatService.putSeats(this.choosenSeats).subscribe((seats) => {
+      console.log(seats,'put'); 
+      this.dialogRef.close(); 
+      this.snackBar.open('Reservation is successfull. Email sent to your address!', 'Close', {
+        duration: 5000
+      });
+    })
   }
 }
 

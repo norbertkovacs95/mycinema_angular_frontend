@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Seat } from 'src/app/shared/seat';
-import { Observable, of} from 'rxjs';
-import { map } from 'rxjs/operators'; 
+import { Observable, of, from} from 'rxjs';
+import { map, concatMap } from 'rxjs/operators'; 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseURL } from '../shared/baseurl';
 
@@ -21,13 +21,13 @@ export class SeatService {
       .pipe(map(seats => seats.filter(seat => seat.cinemaHall === cinemaHall && seat.showTime === showTime)));
   }
 
-  putSeat(seat: Seat): Observable<Seat> {
+  putSeats(seats: Seat[]): Observable<Seat> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
-    return this.http.put<Seat>(baseURL + 'seats/' + seat._id, seat, httpOptions);
+    return from(seats).pipe(concatMap(seat => this.http.put<Seat>(baseURL + 'seats/' + seat._id, seat, httpOptions)))
   }
 
 }

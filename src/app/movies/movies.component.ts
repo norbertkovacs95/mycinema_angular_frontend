@@ -9,8 +9,10 @@ import {  MoviesService } from '../services/movies.service';
 import {  ShowtimesService } from '../services/showtimes.service';
 import {  CinemahallService } from '../services/cinemahall.service';
 import {  SeatService } from '../services/seat.service';
+import {  SectionService } from '../services/section.service';
 import { CinemaHall } from '../shared/cinemaHall';
 import { Seat } from '../shared/seat';
+import { Section } from '../shared/section';
 
 @Component({
   selector: 'app-movies',
@@ -27,7 +29,8 @@ export class MoviesComponent implements OnInit {
     private moviesService: MoviesService,
     private showTimesService: ShowtimesService,
     private cinemaHallService : CinemahallService,
-    private seatService: SeatService
+    private seatService: SeatService,
+    private sectionService: SectionService
     ) { }
 
   ngOnInit() {
@@ -53,6 +56,7 @@ export class MoviesComponent implements OnInit {
     let showTime:ShowTime = this.showTimes.filter((showtime) => showtime._id == id)[0];
     let cinemaHall: CinemaHall;
     let seats: Seat[];
+    let sections: Section[]
 
     this.cinemaHallService.getCinemaHall(showTime["cinemeHall"])
       .subscribe((_cinemaHall) => {
@@ -61,11 +65,16 @@ export class MoviesComponent implements OnInit {
           .subscribe((_seats) => {
             _seats = _seats.filter(seat => seat.showTime == showTime._id);
             seats = _seats;
-            this.dialog.open(ReservationComponent, {width: '750px', height: '520px',data:{
-              showtime: showTime,
-              cinemaHall: cinemaHall,
-              seats: seats
-            }});
+            this.sectionService.getSeactionForCinemaHall(cinemaHall._id)
+              .subscribe((_sections) => {
+                sections = _sections;
+                this.dialog.open(ReservationComponent, {width: '750px', height: '500px',data:{
+                  showtime: showTime,
+                  cinemaHall: cinemaHall,
+                  seats: seats,
+                  sections: sections
+                }});
+              })
         })
       })
   }

@@ -34,6 +34,7 @@ import { ReservationComponent } from './reservation/reservation.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MoviesService } from './services/movies.service';
 import { ShowtimesService } from './services/showtimes.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ShowtimesService } from './services/showtimes.service';
     HomeComponent,
     AboutComponent,
     FooterComponent,
-    ReservationComponent
+    ReservationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -6,5 +6,5 @@ export class Seat {
     cinemaHall: string;
     user:string;
     showTime: string;
-    section: number;
+    section: string;
 }

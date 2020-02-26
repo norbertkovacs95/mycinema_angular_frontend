@@ -31,7 +31,7 @@
                 </mat-form-field>
             </div>
             <p><label>Total price: {{totalPrice}} HUF</label></p>
-            <div class="wrapper">
+            <div fxLayoutAlign="center">
                 <button mat-raised-button color="primary" [disabled]="!ticketFormValid" class="button">Next</button>
             </div>
         </form>
@@ -40,36 +40,42 @@
   <mat-tab label="Seats" [disabled]="!ticketsChoosen || seatsChoosen">
     <div class="tab-content" fxLayout="column" *ngIf="cinemaHall && seats">
         <h4 class="zero-margin">Please select seat(s)</h4>
-        <hr>
-        <table align="center">
-             <tr *ngFor = "let row of rows; let i = index">
-                <th>{{i+1}}</th>
-                <td *ngFor = "let col of cols; let ii = index"><mat-checkbox class="checkbox" [disabled] = "!isSeatFree(ii+1,i+1)" 
-                (change)="setRowCor(ii+1,i+1); onCheckboxChange($event)" id="{{ 'seat' + i + ii }}" [checked]="seatsChoosen[i+1][ii]"></mat-checkbox></td>
-            </tr>
-        </table>
-        <div class="wrapper margin-top" fxFlex >
+        <mat-divider ></mat-divider>
+        <div fxLayout="row wrap" fxLayoutAlign="center"  fxLayoutGap="10px">
+            <table  *ngFor="let section of sections; let iSection = index">
+                <tr *ngFor = "let row of rows[iSection]; let i = index">
+                    <th *ngIf="iSection==0" >{{i+1}}</th>
+                    <td *ngFor = "let col of cols[iSection]; let ii = index"><mat-checkbox class="checkbox" [disabled] = "!isSeatFree(ii + section.colStart,i+1)" 
+                    (change)="setRowCor(ii+ section.colStart,i+1); onCheckboxChange($event)" [checked]="seatCheckboxes[i][ii+ section.colStart-1]"></mat-checkbox></td>
+                </tr>
+            </table>
+        </div>
+        <div fxLayoutAlign="center" class="margin-top" fxFlex>
             <button mat-raised-button color="primary" [disabled]="!seatsValid" class="button" (click) ="onSubmitSeats()">Next</button>
         </div>   
     </div>
    </mat-tab>
     <mat-tab label="User information" [disabled]="!seatsChoosen">
         <div class="tab-content">
-            <h4>Please provide your user information</h4>
-            <form  fxLayoutGap="10px" novalidate [formGroup]="userForm" (ngSubmit)="onSubmitUser()" fxLayout="column" fxLayoutAlign="center">
-                <mat-form-field fxFlex>
+            <h4 class="margin-bottom">Please provide your user information</h4>
+            <form  fxLayoutGap="5px" novalidate [formGroup]="userForm" (ngSubmit)="onSubmitUser()" fxLayout="column" fxLayoutAlign="center">
+                <mat-form-field fxFlex >
                     <input matInput placeholder="First Name" formControlName="firstName">
                     <mat-error *ngIf="formErrors.firstName">{{formErrors.firstName}}</mat-error>
                 </mat-form-field>
-                <mat-form-field fxFlex>
+                <mat-form-field fxFlex >
                     <input matInput placeholder="Last Name" formControlName="lastName">
                     <mat-error *ngIf="formErrors.lastName">{{formErrors.lastName}}</mat-error>
                 </mat-form-field>
-                <mat-form-field fxFlex>
+                <mat-form-field fxFlex >
                     <input matInput placeholder="Email" formControlName="email">
                     <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
                 </mat-form-field>
-                <div class="wrapper" fxFlex>
+                <mat-form-field >
+                    <input matInput placeholder="+36 30 776 8012" formControlName="phone">
+                    <mat-error *ngIf="formErrors.phone">{{formErrors.phone}}</mat-error>
+                </mat-form-field>
+                <div fxLayoutAlign="center" fxFlex>
                     <button mat-raised-button color="primary" [disabled]="userForm.invalid" class="button">Next</button>
                 </div>
             </form>
