@@ -2,8 +2,48 @@
 
 .active {
     background: #2196F3;
+    background: #FF4081;
+}
+
+.active-menu{
+    font-weight: bold !important;
 }
 
 a {
-    margin-right: 20px;
+    margin-right: 15px;
 }
+
+.companyName{
+    font-size: 105%;
+}
+
+.mat-toolbar{
+  height: 7vh;
+}
+
+div {
+    overflow: inherit;
+}
+
+
+button{
+    font-size: 120%;
+    min-width: min-content;
+}
+
+.example-icon {
+    padding: 0 14px;
+  }
+
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+
+  .zero-margin{
+      margin: 0px !important;
+      font-weight: 400 !important;
+  }
+  
+  .margin-left{
+      margin-left: 5px !important;
+  }

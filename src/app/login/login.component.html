@@ -1,27 +1,111 @@
-<mat-toolbar color="primary">
-  Login
-  <span class="flex-spacer"></span>
+<mat-toolbar color="primary" *ngIf="isLogin && !isForgotPass">
+  <img src="./assets/images/pug_logo.png" width="50" height="50">
+  <span>Login</span>
+  <span  class="fill-space"></span>
   <button mat-button mat-dialog-close>&times;</button>
 </mat-toolbar>
 
-<form novalidate #loginForm="ngForm" (ngSubmit)="onSubmit()">
-  <mat-dialog-content>
-    <p fxLayout="column">
-      <mat-form-field>
-        <input matInput placeholder="Username" type="text" [(ngModel)]="user.username" name="username"  #username="ngModel" required>
-        <mat-error *ngIf="username.errors?.required">Username is required</mat-error>
-        </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Password" type="password" [(ngModel)]="user.password" name="password" #password="ngModel" required>
-          <mat-error *ngIf="password.errors?.required">Password is required!</mat-error>
-      </mat-form-field>
-      <mat-checkbox [(ngModel)]="user.remember" name="remember">Remember Me</mat-checkbox>
-    </p>
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    <span class="flex-spacer"></span>
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button type="submit" class="background-primary text-floral-white"
-      [disabled]="loginForm.form.invalid">Login</button>
-  </mat-dialog-actions>
-</form>
+<mat-toolbar color="primary" *ngIf="!isLogin && !isForgotPass">
+  <img src="./assets/images/pug_logo.png" width="50" height="50">
+  <span>Sign up</span>
+  <span  class="fill-space"></span>
+  <button mat-button mat-dialog-close>&times;</button>
+</mat-toolbar>
+
+<mat-toolbar color="primary" *ngIf="isForgotPass">
+  <img src="./assets/images/pug_logo.png" width="50" height="50">
+  <span>Reset password</span>
+  <span  class="fill-space"></span>
+  <button mat-button mat-dialog-close>&times;</button>
+</mat-toolbar>
+
+<div class="tab-content" *ngIf="isLogin && !isForgotPass">
+        <form novalidate #loginForm="ngForm" (ngSubmit)="onSubmitLogin()" fxLayoutGap="15px" fxLayout="column">
+            <p fxLayout="column">
+                <mat-form-field>
+                    <input matInput placeholder="Email" type="text" [(ngModel)]="loginUser.email" name="email"  #email="ngModel" required>
+                    <mat-error *ngIf="email.errors?.required">Email is required</mat-error>
+                    </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Password" type="password" [(ngModel)]="loginUser.password" name="password" #password="ngModel" required>
+                    <mat-error *ngIf="password.errors?.required">Password is required!</mat-error>
+                </mat-form-field>
+            </p>
+            <div fxLayoutAlign="center">
+                <mat-slide-toggle color="accent" [(ngModel)]="loginUser.remember" name="remember">Remember me</mat-slide-toggle>
+            </div>
+            <div fxLayoutAlign="center">
+                <button mat-raised-button color="accent" class="login-buttons" type="button" (click) ="isLoginChange()">Sign Up</button>
+                <button mat-raised-button color="primary" class="login-buttons" type="submit" [disabled]="loginForm.form.invalid">Login</button>
+            </div>
+            <div fxLayoutAlign="center">
+                <a class="forgot-pass" (click)="forgotPassChange()">Forgot password?</a>
+            </div>
+            <div fxLayoutAlign="center">
+                <mat-error *ngIf="loginError">{{loginError}}</mat-error>
+            </div>
+        </form>
+</div>
+
+<div class="tab-content" *ngIf="!isLogin && !isForgotPass">
+        <form novalidate #loginForm="ngForm" (ngSubmit)="onSubmitSignup()" fxLayoutGap="15px" fxLayout="column">
+            <p fxLayout="row" fxLayoutGap="5px">
+                <mat-form-field fxFlex="50">
+                    <input matInput placeholder="Email" type="text" [(ngModel)]="signupUser.email" name="email"  #email="ngModel" required>
+                    <mat-error *ngIf="email.errors?.required">Email is required</mat-error>
+                    </mat-form-field>
+                <mat-form-field fxFlex="50">
+                    <input matInput placeholder="Phone number" type="number" [(ngModel)]="signupUser.phoneNumber" name="phoneNumber" #phoneNumber="ngModel" required>
+                    <mat-error *ngIf="phoneNumber.errors?.required">Phone number is required!</mat-error>
+                </mat-form-field>
+            </p>
+            <p fxLayout="row" fxLayoutGap="5px">
+                <mat-form-field fxFlex="50">
+                    <input matInput placeholder="First name" type="text" [(ngModel)]="signupUser.firstName" name="firstName"  #firstName="ngModel" required>
+                    <mat-error *ngIf="firstName.errors?.required">First name is required</mat-error>
+                    </mat-form-field>
+                <mat-form-field fxFlex="50">
+                    <input matInput placeholder="Last name" type="text" [(ngModel)]="signupUser.lastName" name="lastName" #lastName="ngModel" required>
+                    <mat-error *ngIf="lastName.errors?.required">Last Name is required!</mat-error>
+                </mat-form-field>
+            </p>
+            <p fxLayout="row" fxLayoutGap="5px">
+                <mat-form-field fxFlex="50">
+                    <input matInput placeholder="Password" type="password" [(ngModel)]="signupUser.password" name="password" #password="ngModel" required>
+                    <mat-error *ngIf="password.errors?.required">Password is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="50">
+                    <input matInput placeholder="Password again" type="password" [(ngModel)]="signupUser.passwordAgain" name="passwordAgain" #passwordAgain="ngModel" required>
+                    <mat-error *ngIf="passwordAgain.errors?.required">Password is required!</mat-error>
+                </mat-form-field>
+            </p>
+            <mat-dialog-actions fxLayoutAlign="center">
+                <button mat-raised-button color="accent"  class="signup-buttons" type="button" (click) ="isLoginChange()">Login</button>
+                <button mat-raised-button color="primary" class="signup-buttons"  type="submit" [disabled]="loginForm.form.invalid">Sign up</button>
+            </mat-dialog-actions>
+            <div fxLayoutAlign="center">
+                <mat-error *ngIf="signupError">{{signupError}}</mat-error>
+            </div>
+        </form>
+</div>
+
+<div class="tab-content" *ngIf="isForgotPass">
+        <form novalidate #resetPassForm="ngForm" (ngSubmit)="onSubmitResetPass()" fxLayout="column" fxLayout="center center">
+            <div fxLayout="column"  fxLayoutGap="15px" class="forgot-pass-container">
+                <div fxLayoutAlign="center" fxLayout="column">
+                    <h4>Please provide your email address in order to reset your password</h4>
+                    <mat-form-field>
+                        <input matInput placeholder="Email" type="text" [(ngModel)]="resetPassUser.email" name="email"  #email="ngModel" required>
+                        <mat-error *ngIf="email.errors?.required">Email is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayoutAlign="center">
+                    <button mat-raised-button color="primary"  type="submit" [disabled]="resetPassForm.form.invalid">Reset password</button>
+                </div>
+                <div fxLayoutAlign="center">
+                    <button mat-raised-button color="accent" class="forgot-pass-buttons" type="button" (click) ="leaveForgotPass('signup')">Sign Up</button>
+                    <button mat-raised-button color="accent" class="forgot-pass-buttons" type="button" (click) ="leaveForgotPass('login')">Login</button>
+                </div>
+            </div>
+        </form>
+</div>

@@ -20,6 +20,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatMenuModule} from '@angular/material/menu';
 import 'hammerjs';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -70,13 +73,17 @@ import { LoginComponent } from './login/login.component';
     MatTabsModule,
     MatTooltipModule,
     MatSnackBarModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatMenuModule
   ],
   providers: [
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    ReservationComponent
+    ReservationComponent,
+    LoginComponent
 ]
 })
 export class AppModule { }
