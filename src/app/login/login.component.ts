@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
 
   isLoginChange(){
     this.isLogin = this.isLogin ? false : true;
+    this.loginError = '';
+    this.signupError = '';
   }
 
   forgotPassChange() {

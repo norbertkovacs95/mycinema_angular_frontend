@@ -93,7 +93,7 @@
         <form novalidate #resetPassForm="ngForm" (ngSubmit)="onSubmitResetPass()" fxLayout="column" fxLayout="center center">
             <div fxLayout="column"  fxLayoutGap="15px" class="forgot-pass-container">
                 <div fxLayoutAlign="center" fxLayout="column">
-                    <h4>Please provide your email address in order to reset your password</h4>
+                    <h4>Please provide your email address to reset your password</h4>
                     <mat-form-field>
                         <input matInput placeholder="Email" type="text" [(ngModel)]="resetPassUser.email" name="email"  #email="ngModel" required>
                         <mat-error *ngIf="email.errors?.required">Email is required</mat-error>

@@ -9,4 +9,6 @@ export class Movie {
     posterPath: string;
     uploadDate: string;
     showTimes: string[];
+    featured: boolean;
+    coverPath: string;
 }

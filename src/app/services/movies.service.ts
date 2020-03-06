@@ -19,6 +19,10 @@ export class MoviesService {
     return this.http.get<Movie[]>(baseURL + 'movies');
   }
 
+  getFeaturedMovies(): Observable<Movie[]> {
+    return this.http.get<Movie[]>(baseURL + 'movies')
+      .pipe(map(movies => movies.filter(movie => movie.featured)));
+  }
 
   getMovie(id: string): Observable<Movie> {
     return this.http.get<Movie>(baseURL + 'movies/' + id);

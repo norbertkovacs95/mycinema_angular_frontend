@@ -1,0 +1,113 @@
+body {
+    width: 100% !important;
+    min-height: 100% !important;
+}
+
+
+.home-container{
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.featured-movie {
+    width: 100% !important;
+    height: 55% !important;
+    background-size: cover !important;
+}
+
+
+.featured-movie-actions{
+    width: 100% !important;
+}
+
+.chevron{
+    color: #cccccc !important;
+    transform: scale(1.7) !important;
+}
+
+.chevron:hover {
+    color: white !important;
+}
+
+.minimize {
+    color: #cccccc !important;
+    transform: scale(1.7) !important;
+}
+
+.minimize:hover {
+    color: white !important;
+}
+
+.flex-column {
+    flex: 1 !important;
+}
+
+.fill-space {
+    // This fills the remaining space, by using flexbox.
+    // Every toolbar row uses a flexbox row layout.
+    flex: 1 1 auto !important;
+  }
+
+#title {
+    font-size: 300% !important;
+    color: white !important;
+    margin: 0px !important;
+}
+
+#caption {
+    font-size: 200% !important;
+    color: white !important;
+    margin: 15px !important;
+}
+
+#showtime {
+    color:  #FF4081 !important;
+}
+
+.padding-bottom {
+    margin-bottom: 20px !important;
+}
+
+@media all and (max-width: 600px) {
+
+    #title {
+        font-size: 250% !important;
+        color: white !important;
+        margin: 0px !important;
+    }
+    
+    #caption {
+        font-size: 150% !important;
+        color: white !important;
+        margin: 15px !important;
+    }
+}
+
+#now-playing {
+    width: 80% !important;
+    margin: auto !important;
+}
+
+.now-playing-title{
+    color: #cccccc !important;
+}
+
+.now-playing-title:hover{
+    color:  #FF4081 !important;
+}
+
+.slash{
+    color: #cccccc !important;
+}
+
+.coming-soon-title{
+    color: #cccccc !important;
+}
+
+.coming-soon-title:hover{
+    color:  #FF4081 !important;
+}
+
+.title-selected {
+    color:  #FF4081 !important;
+}

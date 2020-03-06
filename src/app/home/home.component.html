@@ -1,1 +1,34 @@
-<p>home works!</p>
+<div class="home-container" *ngIf = "movies">
+    <div [ngStyle]="{background: 'url(' + featuredMovie.coverPath + ')'}" 
+        *ngIf="featuredMovie" class="featured-movie" fxLayout="column" fxLayoutAlign="center">
+        <div fxFlex="40"></div>
+        <div class="featured-movie-actions" fxLayout="row" fxFlex="10"> 
+            <button mat-button (click) = "changeFeaturedMovie(featuredMovie._id)"><span class="fa fa-chevron-left fa-lg chevron"></span></button>
+            <span class="fill-space"></span>
+            <button mat-button (click) = "changeFeaturedMovie(featuredMovie._id)"><span class="fa fa-chevron-right fa-lg chevron"></span></button>
+        </div>
+        <div fxFlex="20"></div>
+        <div fxLayout="column" fxLayoutAlign="center" fxFlex="20">
+            <a mat-button routerLink="/movies"><h1 id="title">{{featuredMovie.title | uppercase}}</h1></a>
+            <a mat-button routerLink="/movies"><h1 routerLink="/movies" id="caption"><span>CHECK OUT THE </span><span id="showtime">SHOWTIMES</span></h1></a>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center" fxFlex="10">
+            <button mat-button *ngFor = "let movie of movies; let i = index" (click) = "selectFeaturedMovie(i)" id="{{'min' + i}}"><span class="fa fa-window-minimize fa-lg minimize"></span></button>
+        </div>
+    </div>
+
+    <div id="now-playing" fxLayout="column" fxLayoutAlign="center"> 
+        <div fxLayout="row" fxLayoutAlign="center"  fxLayoutGap="15px">
+            <h1 class="now-playing-title title-selected">Now playing</h1>
+            <h1 class="slash"> / </h1>
+            <h1 class="coming-soon-title">Coming soon</h1>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
