@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Movie } from "src/app/shared/movie";
-import { ShowTime } from "src/app/shared/showTime";
-
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { LoginComponent } from '../login/login.component';
 import { ReservationComponent } from '../reservation/reservation.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -11,9 +9,13 @@ import {  ShowtimesService } from '../services/showtimes.service';
 import {  CinemahallService } from '../services/cinemahall.service';
 import {  SeatService } from '../services/seat.service';
 import {  SectionService } from '../services/section.service';
+import { AuthenticationService } from '../services/authentication.service';
+
 import { CinemaHall } from '../shared/cinemaHall';
 import { Seat } from '../shared/seat';
 import { Section } from '../shared/section';
+import { Movie } from "src/app/shared/movie";
+import { ShowTime } from "src/app/shared/showTime";
 
 @Component({
   selector: 'app-movies',
@@ -38,6 +40,7 @@ export class MoviesComponent implements OnInit {
     private cinemaHallService : CinemahallService,
     private seatService: SeatService,
     private sectionService: SectionService,
+    private authService: AuthenticationService,
     private fb: FormBuilder
     ) { 
 
@@ -104,24 +107,38 @@ export class MoviesComponent implements OnInit {
     let seats: Seat[];
     let sections: Section[]
 
-    this.cinemaHallService.getCinemaHall(showTime["cinemeHall"])
-      .subscribe((_cinemaHall) => {
-        cinemaHall = _cinemaHall;
-        this.seatService.getSeats()
-          .subscribe((_seats) => {
-            _seats = _seats.filter(seat => seat.showTime == showTime._id);
-            seats = _seats;
-            this.sectionService.getSeactionForCinemaHall(cinemaHall._id)
-              .subscribe((_sections) => {
-                sections = _sections;
-                this.dialog.open(ReservationComponent, {width: '750px', height: '500px',data:{
-                  showtime: showTime,
-                  cinemaHall: cinemaHall,
-                  seats: seats,
-                  sections: sections
-                }});
-              })
-        })
+
+    this.authService.verifyUser()
+      .subscribe(res => {
+        this.cinemaHallService.getCinemaHall(showTime["cinemeHall"])
+          .subscribe((_cinemaHall) => {
+            cinemaHall = _cinemaHall;
+            this.seatService.getSeats()
+              .subscribe((_seats) => {
+                _seats = _seats.filter(seat => seat.showTime == showTime._id);
+                seats = _seats;
+                this.sectionService.getSeactionForCinemaHall(cinemaHall._id)
+                  .subscribe((_sections) => {
+                    sections = _sections;
+                    this.dialog.open(ReservationComponent, {width: '750px', height: '500px',data:{
+                      showtime: showTime,
+                      cinemaHall: cinemaHall,
+                      seats: seats,
+                      sections: sections,
+                      user: res.user
+                    }});
+                  })
+            })
+          })
+        },
+        err => {
+          if (err.status === 401) {
+            this.dialog.open(LoginComponent, {width: '500px', height: '500px',data:{
+              errMess: "Please make sure to login or register before you book tickets"
+            }});
+          } else {
+            console.log(err);
+          }
       })
   }
 

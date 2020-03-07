@@ -23,8 +23,8 @@
         <form novalidate #loginForm="ngForm" (ngSubmit)="onSubmitLogin()" fxLayoutGap="15px" fxLayout="column">
             <p fxLayout="column">
                 <mat-form-field>
-                    <input matInput placeholder="Email" type="text" [(ngModel)]="loginUser.email" name="email"  #email="ngModel" required>
-                    <mat-error *ngIf="email.errors?.required">Email is required</mat-error>
+                    <input matInput placeholder="Email" type="text" [(ngModel)]="loginUser.username" name="username"  #username="ngModel" required>
+                    <mat-error *ngIf="username.errors?.required">Email is required</mat-error>
                     </mat-form-field>
                 <mat-form-field>
                     <input matInput placeholder="Password" type="password" [(ngModel)]="loginUser.password" name="password" #password="ngModel" required>
@@ -51,12 +51,12 @@
         <form novalidate #loginForm="ngForm" (ngSubmit)="onSubmitSignup()" fxLayoutGap="15px" fxLayout="column">
             <p fxLayout="row" fxLayoutGap="5px">
                 <mat-form-field fxFlex="50">
-                    <input matInput placeholder="Email" type="text" [(ngModel)]="signupUser.email" name="email"  #email="ngModel" required>
-                    <mat-error *ngIf="email.errors?.required">Email is required</mat-error>
+                    <input matInput placeholder="Email" type="text" [(ngModel)]="signupUser.username" name="username"  #username="ngModel" required>
+                    <mat-error *ngIf="username.errors?.required">Email is required</mat-error>
                     </mat-form-field>
                 <mat-form-field fxFlex="50">
-                    <input matInput placeholder="Phone number" type="number" [(ngModel)]="signupUser.phoneNumber" name="phoneNumber" #phoneNumber="ngModel" required>
-                    <mat-error *ngIf="phoneNumber.errors?.required">Phone number is required!</mat-error>
+                    <input matInput placeholder="Phone number" type="number" [(ngModel)]="signupUser.phone" name="phone" #phone="ngModel" required>
+                    <mat-error *ngIf="phone.errors?.required">Phone number is required!</mat-error>
                 </mat-form-field>
             </p>
             <p fxLayout="row" fxLayoutGap="5px">

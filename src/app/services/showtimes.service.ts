@@ -3,7 +3,6 @@ import { ShowTime } from 'src/app/shared/showTime';
 import { Observable, of} from 'rxjs';
 import { delay, catchError } from 'rxjs/operators';
 
-import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseURL } from '../shared/baseurl';
 

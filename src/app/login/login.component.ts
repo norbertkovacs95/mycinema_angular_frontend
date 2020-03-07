@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 import { AuthenticationService } from '../services/authentication.service';
@@ -20,13 +20,19 @@ export class LoginComponent implements OnInit {
   loginError: String;
   signupError: String;
 
-  loginUser = { email: '', password: '',  remember:false};
-  signupUser = { email:'',password:'',passwordAgain:'', firstName:'', lastName:'',phoneNumber:null};
+  loginUser = { username: '', password: '',  remember:false};
+  signupUser = { username:'',password:'',passwordAgain:'', firstName:'', lastName:'',phone:null};
   resetPassUser = { email: ''};
 
-  constructor(public dialogRef: MatDialogRef<LoginComponent>,
-              private authService: AuthenticationService,
-              private snackBar: MatSnackBar) { }
+  constructor(
+    public dialogRef: MatDialogRef<LoginComponent>,
+    private authService: AuthenticationService,
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) data) { 
+    if (data != null) {
+      this.loginError = data.errMess;
+    }
+  }
 
   ngOnInit() {
   }
@@ -52,7 +58,7 @@ export class LoginComponent implements OnInit {
 
   onSubmitLogin() {
     this.loginError = '';
-    this.authService.loginUser({username: this.loginUser.email, password: this.loginUser.password})
+    this.authService.loginUser({username: this.loginUser.username, password: this.loginUser.password})
       .subscribe((res) => {
         if(res.success) {
           if(this.loginUser.remember) {
@@ -65,11 +71,10 @@ export class LoginComponent implements OnInit {
           });
         }
       },(err) => {
-        console.log(err);
         if (err.status == 401) {
           this.loginError = 'The email or password provided is incorrect.'
         } else {
-          this.loginError = err.error;
+          this.loginError = err.error.err.message;
         }
         event.preventDefault();
       })
@@ -77,28 +82,24 @@ export class LoginComponent implements OnInit {
 
   onSubmitSignup() {
     this.signupError = '';
-    let user = {
-      username: this.signupUser.email,
+    this.authService.signupUser({
       firstName: this.signupUser.firstName,
       lastName: this.signupUser.lastName,
+      username: this.signupUser.username,
       password: this.signupUser.password,
-      phone: this.signupUser.phoneNumber
-    }
-    this.authService.signupUser(user)
+      phone: this.signupUser.phone,
+    })
       .subscribe((res) => {
-        if(res.statusCode == 200) {
-          window.localStorage.setItem('token', res.token);
-          this.dialogRef.close();
-          this.snackBar.open(res.status, 'Close', {
-            duration: 5000
-          });
-        }
+        window.localStorage.setItem('token', res.token);
+        this.dialogRef.close();
+        this.snackBar.open(res.status, 'Close', {
+          duration: 5000
+        });
       }, (err) => {
-        console.log(err);
         if (err.status == 409) {
           this.signupError = 'The email provided is already in use.'
         } else {
-          this.signupError = err.error;
+          this.signupError = err.error.err.message;
         }
         event.preventDefault();
       })
