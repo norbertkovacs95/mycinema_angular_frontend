@@ -4,6 +4,7 @@ import { ShowTime } from "src/app/shared/showTime";
 
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ReservationComponent } from '../reservation/reservation.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import {  MoviesService } from '../services/movies.service';
 import {  ShowtimesService } from '../services/showtimes.service';
@@ -22,7 +23,13 @@ import { Section } from '../shared/section';
 export class MoviesComponent implements OnInit {
 
   movies: Movie[];
+  filteredMovies: Movie[];
   showTimes: ShowTime[];
+  minDate: Date;
+  maxDate: Date;
+  selectedMovie: String;
+
+  filterForm: FormGroup;
 
   constructor(
     public dialog: MatDialog,
@@ -30,10 +37,28 @@ export class MoviesComponent implements OnInit {
     private showTimesService: ShowtimesService,
     private cinemaHallService : CinemahallService,
     private seatService: SeatService,
-    private sectionService: SectionService
-    ) { }
+    private sectionService: SectionService,
+    private fb: FormBuilder
+    ) { 
+
+    }
 
   ngOnInit() {
+
+    const currentYear = new Date().getFullYear();
+    const currMonth = new Date().getMonth();
+    const currDay = new Date().getDay();
+    this.minDate = new Date(currentYear, currMonth, currDay+1);
+    this.maxDate = new Date(currentYear, currMonth, currDay+1);
+
+    this.filterForm = this.fb.group({
+      movie:  0,
+      date: new Date()
+    });
+      
+    this.filterForm.valueChanges
+      .subscribe(data => this.onValueChangeFilterForm(data));
+    this.onValueChangeFilterForm();
 
     this.showTimesService.getShowTimes()
       .subscribe((showTimes) => {
@@ -43,8 +68,29 @@ export class MoviesComponent implements OnInit {
     this.moviesService.getMovies()
       .subscribe((movies) => {
         this.movies = movies;
+        this.filteredMovies = movies;
     });
       
+  }
+
+  onValueChangeFilterForm(data?: any) {
+    if (!this.filterForm || !this.movies || !this.filteredMovies) { return; }
+    
+    const form = this.filterForm;
+    let movies:Movie[];
+
+    if (form.controls.movie.value) {
+      movies = this.movies.filter((movie) => movie.title == form.controls.movie.value);
+    } else {
+      movies = this.movies;
+    }
+
+    // Need to change filtering to filter by  date as well
+    if (!form.controls.date.value) {
+      // filter local movies array by date
+    }
+
+    this.filteredMovies = movies;
   }
 
   returnShowTime(id: string): string {

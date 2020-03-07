@@ -25,12 +25,18 @@ img{
     height: 450px;
   }
 
-  h1{
-      margin-left: 50px;
-  }
 
   .container-movies{
     min-height: 80% !important;
     max-width: 80% !important;
     margin: auto !important;
   }
+
+#container-date-form{
+  margin: 15px !important;
+}
+
+.header-title {
+  color:  #FF4081 !important;
+  text-align: center !important;
+}

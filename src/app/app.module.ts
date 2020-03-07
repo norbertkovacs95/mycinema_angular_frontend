@@ -24,6 +24,8 @@ import { MatIconModule } from '@angular/material';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatMenuModule} from '@angular/material/menu';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material';
 import 'hammerjs';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -78,9 +80,12 @@ import { LoginComponent } from './login/login.component';
     MatIconModule,
     MatSidenavModule,
     MatMenuModule,
-    NgbModule
+    NgbModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
+    MatDatepickerModule
   ],
   bootstrap: [AppComponent],
   entryComponents: [
