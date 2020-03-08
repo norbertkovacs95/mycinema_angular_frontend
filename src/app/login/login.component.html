@@ -48,40 +48,40 @@
 </div>
 
 <div class="tab-content" *ngIf="!isLogin && !isForgotPass">
-        <form novalidate #loginForm="ngForm" (ngSubmit)="onSubmitSignup()" fxLayoutGap="15px" fxLayout="column">
+        <form novalidate [formGroup]="signupForm" (ngSubmit)="onSubmitSignup()" fxLayoutGap="15px" fxLayout="column">
             <p fxLayout="row" fxLayoutGap="5px">
                 <mat-form-field fxFlex="50">
-                    <input matInput placeholder="Email" type="text" [(ngModel)]="signupUser.username" name="username"  #username="ngModel" required>
-                    <mat-error *ngIf="username.errors?.required">Email is required</mat-error>
+                    <input matInput placeholder="Email" type="text" formControlName="username">
+                    <mat-error *ngIf="formErrors.username">{{formErrors.username}}</mat-error>
                     </mat-form-field>
                 <mat-form-field fxFlex="50">
-                    <input matInput placeholder="Phone number" type="number" [(ngModel)]="signupUser.phone" name="phone" #phone="ngModel" required>
-                    <mat-error *ngIf="phone.errors?.required">Phone number is required!</mat-error>
+                    <input matInput placeholder="Phone number" type="text" formControlName="phone">
+                    <mat-error *ngIf="formErrors.phone">{{formErrors.phone}}</mat-error>
                 </mat-form-field>
             </p>
             <p fxLayout="row" fxLayoutGap="5px">
                 <mat-form-field fxFlex="50">
-                    <input matInput placeholder="First name" type="text" [(ngModel)]="signupUser.firstName" name="firstName"  #firstName="ngModel" required>
-                    <mat-error *ngIf="firstName.errors?.required">First name is required</mat-error>
+                    <input matInput placeholder="First name" type="text" formControlName="firstName">
+                    <mat-error *ngIf="formErrors.firstName">{{formErrors.firstName}}</mat-error>
                     </mat-form-field>
                 <mat-form-field fxFlex="50">
-                    <input matInput placeholder="Last name" type="text" [(ngModel)]="signupUser.lastName" name="lastName" #lastName="ngModel" required>
-                    <mat-error *ngIf="lastName.errors?.required">Last Name is required!</mat-error>
+                    <input matInput placeholder="Last name" type="text" formControlName="lastName">
+                    <mat-error *ngIf="formErrors.lastName">{{formErrors.lastName}}</mat-error>
                 </mat-form-field>
             </p>
             <p fxLayout="row" fxLayoutGap="5px">
                 <mat-form-field fxFlex="50">
-                    <input matInput placeholder="Password" type="password" [(ngModel)]="signupUser.password" name="password" #password="ngModel" required>
-                    <mat-error *ngIf="password.errors?.required">Password is required!</mat-error>
+                    <input matInput placeholder="Password" type="password" formControlName="password">
+                    <mat-error *ngIf="formErrors.password">{{formErrors.password}}</mat-error>
                 </mat-form-field>
                 <mat-form-field fxFlex="50">
-                    <input matInput placeholder="Password again" type="password" [(ngModel)]="signupUser.passwordAgain" name="passwordAgain" #passwordAgain="ngModel" required>
-                    <mat-error *ngIf="passwordAgain.errors?.required">Password is required!</mat-error>
+                    <input matInput placeholder="Password again" type="password" formControlName="passwordAgain">
+                    <mat-error *ngIf="formErrors.passwordAgain">{{formErrors.passwordAgain}}</mat-error>
                 </mat-form-field>
             </p>
             <mat-dialog-actions fxLayoutAlign="center">
                 <button mat-raised-button color="accent"  class="signup-buttons" type="button" (click) ="isLoginChange()">Login</button>
-                <button mat-raised-button color="primary" class="signup-buttons"  type="submit" [disabled]="loginForm.form.invalid">Sign up</button>
+                <button mat-raised-button color="primary" class="signup-buttons"  type="submit" [disabled]="signupForm.invalid">Sign up</button>
             </mat-dialog-actions>
             <div fxLayoutAlign="center">
                 <mat-error *ngIf="signupError">{{signupError}}</mat-error>

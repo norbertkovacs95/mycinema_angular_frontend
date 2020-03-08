@@ -54,3 +54,9 @@ m.at-checkbox .mat-checkbox-frame {
     justify-content:center !important;
     align-items:center !important;
 }
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

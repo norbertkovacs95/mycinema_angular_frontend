@@ -128,7 +128,7 @@ export class MoviesComponent implements OnInit {
                       user: res.user
                     }});
                   })
-            })
+              })
           })
         },
         err => {
