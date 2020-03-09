@@ -3,6 +3,8 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
 import { ReservationComponent } from '../reservation/reservation.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { flatMap } from 'rxjs/operators'
+import { pipe } from 'rxjs';
 
 import {  MoviesService } from '../services/movies.service';
 import {  ShowtimesService } from '../services/showtimes.service';
@@ -108,38 +110,38 @@ export class MoviesComponent implements OnInit {
     let sections: Section[]
 
 
-    this.authService.verifyUser()
-      .subscribe(res => {
-        this.cinemaHallService.getCinemaHall(showTime["cinemeHall"])
-          .subscribe((_cinemaHall) => {
-            cinemaHall = _cinemaHall;
-            this.seatService.getSeats()
-              .subscribe((_seats) => {
-                _seats = _seats.filter(seat => seat.showTime == showTime._id);
-                seats = _seats;
-                this.sectionService.getSeactionForCinemaHall(cinemaHall._id)
-                  .subscribe((_sections) => {
-                    sections = _sections;
-                    this.dialog.open(ReservationComponent, {width: '750px', height: '500px',data:{
-                      showtime: showTime,
-                      cinemaHall: cinemaHall,
-                      seats: seats,
-                      sections: sections,
-                      user: res.user
-                    }});
-                  })
-              })
-          })
-        },
-        err => {
-          if (err.status === 401) {
-            this.dialog.open(LoginComponent, {width: '500px', height: '500px',data:{
-              errMess: "Please make sure to login or register before you book tickets"
-            }});
-          } else {
-            console.log(err);
-          }
-      })
+    this.cinemaHallService.getCinemaHall(showTime["cinemeHall"])
+      .pipe(flatMap((_cinemaHall) => {
+        cinemaHall = _cinemaHall;
+        return this.seatService.getSeats()}))
+      .pipe(flatMap((_seats) => {
+        _seats = _seats.filter(seat => seat.showTime == showTime._id);
+        seats = _seats;
+        return this.sectionService.getSeactionForCinemaHall(cinemaHall._id)}))
+      .pipe(flatMap((_sections) => {
+        sections = _sections;
+        return this.authService.verifyUser()}))
+      .subscribe((res) => {
+        this.dialog.open(ReservationComponent, {width: '750px', height: '500px',data:{
+          showtime: showTime,
+          cinemaHall: cinemaHall,
+          seats: seats,
+          sections: sections,
+          user: res.user
+        }})
+      }, (err) => {
+        if (err.status === 401) {
+          this.dialog.open(LoginComponent, {width: '500px', height: '500px',data:{
+            errMess: "Please make sure to login or register before you book tickets",
+            showtime: showTime,
+            cinemaHall: cinemaHall,
+            seats: seats,
+            sections: sections
+          }});
+        } else {
+          console.log(err);
+        }
+    })
   }
 
 }

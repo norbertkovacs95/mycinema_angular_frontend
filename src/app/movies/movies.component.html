@@ -38,7 +38,7 @@
             <mat-card-content>
                 <p>{{movie.synopsis}}</p>
             </mat-card-content>
-            <mat-card-actions>
+            <mat-card-actions fxLayoutAlign="center">
                 <button class="action-button" *ngFor="let id of movie.showTimes"mat-raised-button color="primary" (click)="openReservationForm(id)">{{returnShowTime(id)}}</button>
             </mat-card-actions>
         </mat-card>

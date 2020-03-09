@@ -2,7 +2,13 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators, ɵangular_packages_forms_forms_a } from '@angular/forms';
+import { ReservationComponent } from '../reservation/reservation.component';
 
+import { User } from '../shared/user';
+import { Seat } from '../shared/seat';
+import { ShowTime } from '../shared/showTime';
+import { CinemaHall } from '../shared/cinemaHall';
+import { Section } from '../shared/section';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
@@ -17,8 +23,14 @@ export class LoginComponent implements OnInit {
   loginText: String;
   loginError: String;
   signupError: String;
-
   signupForm: FormGroup;
+
+  userId: string;
+  seats: Seat[];
+  showTime: ShowTime;
+  cinemaHall: CinemaHall;
+  sections: Section[];
+  shouldTransfer: Boolean = false;
 
   loginUser = { username: '', password: '',  remember:false};
   resetPassUser = { email: ''};
@@ -58,12 +70,18 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
+    public dialog: MatDialog,
     private authService: AuthenticationService,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) data) { 
     if (data != null) {
       this.loginError = data.errMess;
+      this.showTime = data.showtime;
+      this.seats = data.seats;
+      this.cinemaHall= data.cinemaHall;
+      this.sections = data.sections;
+      this.shouldTransfer = true;
     }
   }
 
@@ -116,25 +134,34 @@ export class LoginComponent implements OnInit {
   onSubmitLogin() {
     this.loginError = '';
     this.authService.loginUser({username: this.loginUser.username, password: this.loginUser.password})
-      .subscribe((res) => {
-        if(res.success) {
-          if(this.loginUser.remember) {
-            window.localStorage.setItem('token', res.token);
-          }
+    .subscribe((res) => {
+      if(res.success) {
+        if(this.loginUser.remember) {
           window.localStorage.setItem('token', res.token);
-          this.dialogRef.close();
-          this.snackBar.open(res.status, 'Close', {
-            duration: 5000
-          });
         }
-      },(err) => {
-        if (err.status == 401) {
-          this.loginError = 'The email or password provided is incorrect.'
-        } else {
-          this.loginError = err.error.err.message;
+        window.localStorage.setItem('token', res.token);
+        this.dialogRef.close();
+        this.snackBar.open(res.status, 'Close', {
+          duration: 5000
+        });
+        if (this.shouldTransfer) {
+          this.dialog.open(ReservationComponent, {width: '750px', height: '500px',data:{
+            showtime: this.showTime,
+            cinemaHall: this.cinemaHall,
+            seats: this.seats,
+            sections: this.sections,
+            user: res.user
+          }})
         }
-        event.preventDefault();
-      })
+      }
+    },(err) => {
+      if (err.status == 401) {
+        this.loginError = 'The email or password provided is incorrect.'
+      } else {
+        this.loginError = err.error.err.message;
+      }
+      event.preventDefault();
+    })
   }
 
   onValueChangedSignup(data?: any) {
@@ -181,20 +208,29 @@ export class LoginComponent implements OnInit {
       password: user.password,
       phone: user.phone,
     })
-      .subscribe((res) => {
-        window.localStorage.setItem('token', res.token);
-        this.dialogRef.close();
-        this.snackBar.open(res.status, 'Close', {
-          duration: 5000
-        });
-      }, (err) => {
-        if (err.status == 409) {
-          this.signupError = 'The email provided is already in use.'
-        } else {
-          this.signupError = err.error.err.message;
-        }
-        event.preventDefault();
-      })
+    .subscribe((res) => {
+      window.localStorage.setItem('token', res.token);
+      this.dialogRef.close();
+      this.snackBar.open(res.status, 'Close', {
+        duration: 5000
+      });
+      if (this.shouldTransfer) {
+        this.dialog.open(ReservationComponent, {width: '750px', height: '500px',data:{
+          showtime: this.showTime,
+          cinemaHall: this.cinemaHall,
+          seats: this.seats,
+          sections: this.sections,
+          user: res.user
+        }})
+      }
+    }, (err) => {
+      if (err.status == 409) {
+        this.signupError = 'The email provided is already in use.'
+      } else {
+        this.signupError = err.error.err.message;
+      }
+      event.preventDefault();
+    })
   }
 
   onSubmitResetPass() {
