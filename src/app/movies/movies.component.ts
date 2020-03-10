@@ -50,11 +50,11 @@ export class MoviesComponent implements OnInit {
 
   ngOnInit() {
 
-    const currentYear = new Date().getFullYear();
-    const currMonth = new Date().getMonth();
-    const currDay = new Date().getDay();
-    this.minDate = new Date(currentYear, currMonth, currDay+1);
-    this.maxDate = new Date(currentYear, currMonth, currDay+1);
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(new Date().getDate()+1);
+    this.minDate = today;
+    this.maxDate = tomorrow;
 
     this.filterForm = this.fb.group({
       movie:  0,
