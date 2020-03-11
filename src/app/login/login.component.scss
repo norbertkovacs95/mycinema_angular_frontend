@@ -1,3 +1,4 @@
+@import '../../variables';
 
 .tab-content {
     margin: 25px !important;
@@ -25,23 +26,14 @@ img{
     margin-top: 15px 5px !important;
 }
 
-m.at-checkbox .mat-checkbox-frame {
-    transform: scale(1.5) !important;
-    
-}
-
-.mat-checkbox-checked .mat-checkbox-background {
-    transform: scale(1.5) !important;
-    
-}
 
 .forgot-pass {
     text-decoration: none !important;
-    color: #3F51B5 !important;
+    color: white !important;
 }
 
 .forgot-pass:hover{
-    color: #FF4081 !important;
+    color: $lightPrimaryPalette !important;
 }
 
 .forgot-pass-buttons{

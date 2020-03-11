@@ -1,10 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-//@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+//@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 @import 'variables';
 @import '../node_modules/font-awesome/scss/font-awesome.scss';
 
-/* For Dark Theme
+// For Dark Theme
 input {
   color: white !important;
 }
@@ -12,7 +12,7 @@ input {
 body{
     background-color: #303030 !important;
 }
-*/
+
 
 body {
     padding: 0;

@@ -10,6 +10,8 @@ import { MoviesService } from '../services/movies.service';
 export class HomeComponent implements OnInit {
 
   featuredMovie: Movie;
+  nowPlaying: Movie[];
+  comingSonn: Movie[];
   movies: Movie[];
   movieIds: String[];
 
@@ -18,6 +20,7 @@ export class HomeComponent implements OnInit {
     .subscribe((movies) => {
       this.featuredMovie = movies[0];
       this.movies = movies;
+      this.nowPlaying = movies.slice(0,4);
       this.movieIds = movies.map(movie => movie._id);
     });
   }

@@ -1,4 +1,6 @@
-$footer: #B0BEC5;
+@import '../../variables';
+
+$footer: #1c1919;
 
 @mixin zero-margin($pad-up-down, $pad-left-right) {
     margin: 0px auto;
@@ -10,7 +12,9 @@ $footer: #B0BEC5;
     @include zero-margin(20px, 0px);
 }
 
-
+a,i,h4, p, address {
+    color: white;
+}
 
 .inline {
     display: inline !important;

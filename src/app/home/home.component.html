@@ -1,7 +1,7 @@
 <div class="home-container" *ngIf = "movies">
     <div [ngStyle]="{background: 'url(' + featuredMovie.coverPath + ')'}" 
         *ngIf="featuredMovie" class="featured-movie" fxLayout="column" fxLayoutAlign="center">
-        <div fxFlex="40"></div>
+        <div fxFlex="60"></div>
         <div class="featured-movie-actions" fxLayout="row" fxFlex="10"> 
             <button mat-button (click) = "changeFeaturedMovie(featuredMovie._id)"><span class="fa fa-chevron-left fa-lg chevron"></span></button>
             <span class="fill-space"></span>
@@ -23,7 +23,20 @@
             <h1 class="slash"> / </h1>
             <h1 class="coming-soon-title">Coming soon</h1>
         </div>
-
+        <div  fxLayout="row"
+            fxLayout.sm="column"
+            fxLayout.xs="column"
+            fxLayoutGap="35px"
+            fxLayoutAlign="center center"
+            id="card-container">
+            <mat-card class="nowPlaying-card" *ngFor="let movie of nowPlaying">
+                <img mat-card-image src={{movie.posterPath}} width="250px" height="500px">
+                <mat-card-actions>
+                    <button mat-button>LIKE</button>
+                    <button mat-button>SHARE</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
     </div>
 
 </div>

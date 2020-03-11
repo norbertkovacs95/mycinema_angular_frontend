@@ -1,3 +1,5 @@
+@import '../../variables';
+
 body {
     width: 100% !important;
     min-height: 100% !important;
@@ -6,17 +8,18 @@ body {
 
 .home-container{
     width: 100% !important;
-    height: 100% !important;
+    min-height: 100% !important;
 }
 
 .featured-movie {
     width: 100% !important;
-    height: 55% !important;
+    min-height: 600px !important;
     background-size: cover !important;
 }
 
 
 .featured-movie-actions{
+    margin-top: 150px !important;
     width: 100% !important;
 }
 
@@ -43,8 +46,6 @@ body {
 }
 
 .fill-space {
-    // This fills the remaining space, by using flexbox.
-    // Every toolbar row uses a flexbox row layout.
     flex: 1 1 auto !important;
   }
 
@@ -61,7 +62,7 @@ body {
 }
 
 #showtime {
-    color:  #FF4081 !important;
+    color: $lightPrimaryPalette !important;
 }
 
 .padding-bottom {
@@ -70,6 +71,18 @@ body {
 
 @media all and (max-width: 600px) {
 
+    .featured-movie {
+        width: 100% !important;
+        //height: 55% !important;
+        min-height: 400px !important;
+        background-size: cover !important;
+    }
+
+    .featured-movie-actions{
+        margin-top: 150px !important;
+        width: 100% !important;
+    }
+    
     #title {
         font-size: 250% !important;
         color: white !important;
@@ -127,4 +140,13 @@ body {
 
 .title-selected {
     color:  #FF4081 !important;
+}
+
+.nowPlaying-card {
+    width: 300px !important;
+    height: 550px !important;
+}
+
+#card-container {
+    margin-bottom: 25px !important;
 }
