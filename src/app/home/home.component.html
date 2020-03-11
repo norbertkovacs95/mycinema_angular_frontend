@@ -29,8 +29,8 @@
             fxLayoutGap="35px"
             fxLayoutAlign="center center"
             id="card-container">
-            <mat-card class="nowPlaying-card" *ngFor="let movie of nowPlaying">
-                <img mat-card-image src={{movie.posterPath}} width="250px" height="500px">
+            <mat-card class="nowPlaying-card" *ngFor="let movie of nowPlaying" appHighlight>
+                <img mat-card-image src={{movie.posterPath}} width="250px" height="500px" class="card-image">
                 <mat-card-actions>
                     <button mat-button>LIKE</button>
                     <button mat-button>SHARE</button>

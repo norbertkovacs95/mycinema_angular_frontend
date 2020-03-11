@@ -44,6 +44,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       padding:0;
     }
 }
+
+.highlight {
+    margin-top: -25px !important;
+}
+
 app-root{
     min-height: 100%;
 }
@@ -70,10 +75,6 @@ app-home{
     padding: 0px 25px 0px 25px !important;
 }
 
-/*
-input.largerCheckbox
-{
-width: 30px !important;;
-height: 30px !important;;
+.card-image{
+    border-bottom: 2px solid mat-color($primaryPalette);
 }
-*/

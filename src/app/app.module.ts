@@ -41,6 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MoviesService } from './services/movies.service';
 import { ShowtimesService } from './services/showtimes.service';
 import { LoginComponent } from './login/login.component';
+import { HighlightDirective } from './directives/highlight.directive';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { LoginComponent } from './login/login.component';
     AboutComponent,
     FooterComponent,
     ReservationComponent,
-    LoginComponent
+    LoginComponent,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,
