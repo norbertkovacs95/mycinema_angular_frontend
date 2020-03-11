@@ -19,21 +19,41 @@
 
     <div id="now-playing" fxLayout="column" fxLayoutAlign="center"> 
         <div fxLayout="row" fxLayoutAlign="center"  fxLayoutGap="15px">
-            <h1 class="now-playing-title title-selected">Now playing</h1>
+            <h1 id="now-playing-header" class="now-playing-title title-selected" (click)="changeNowPlaying()">Now playing</h1>
             <h1 class="slash"> / </h1>
-            <h1 class="coming-soon-title">Coming soon</h1>
+            <h1 id="coming-soon-header" class="coming-soon-title" (click)="changeNowPlaying()">Coming soon</h1>
         </div>
         <div  fxLayout="row"
             fxLayout.sm="column"
             fxLayout.xs="column"
             fxLayoutGap="35px"
             fxLayoutAlign="center center"
-            id="card-container">
+            id="card-container" *ngIf="isNowPlaying">
             <mat-card class="nowPlaying-card" *ngFor="let movie of nowPlaying" appHighlight>
                 <img mat-card-image src={{movie.posterPath}} width="250px" height="500px" class="card-image">
-                <mat-card-actions>
-                    <button mat-button>LIKE</button>
-                    <button mat-button>SHARE</button>
+                <mat-card-actions fxLayout="row">
+                    <a mat-button color="ascent"><span class="fa fa-play fa-lg"></span></a>
+                    <span class="fill-space"></span>
+                    <h4>{{movie.title}}</h4>
+                    <span class="fill-space"></span>
+                    <a mat-button color="ascent" routerLink="/movies"><span class="fa fa-ticket fa-lg"></span></a>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        <div  fxLayout="row"
+            fxLayout.sm="column"
+            fxLayout.xs="column"
+            fxLayoutGap="35px"
+            fxLayoutAlign="center center"
+            id="card-container" *ngIf="!isNowPlaying">
+            <mat-card class="nowPlaying-card" *ngFor="let movie of comingSoon" appHighlight>
+                <img mat-card-image src={{movie.posterPath}} width="250px" height="500px" class="card-image">
+                <mat-card-actions fxLayout="row">
+                    <a mat-button color="ascent"><span class="fa fa-play fa-lg"></span></a>
+                    <span class="fill-space"></span>
+                    <h4>{{movie.title}}</h4>
+                    <span class="fill-space"></span>
+                    <a mat-button color="ascent"><span class="fa fa-info-circle fa-lg"></span></a>
                 </mat-card-actions>
             </mat-card>
         </div>

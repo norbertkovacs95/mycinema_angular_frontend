@@ -11,9 +11,10 @@ export class HomeComponent implements OnInit {
 
   featuredMovie: Movie;
   nowPlaying: Movie[];
-  comingSonn: Movie[];
+  comingSoon: Movie[];
   movies: Movie[];
   movieIds: String[];
+  isNowPlaying: Boolean = true;
 
   constructor(private movieService: MoviesService, private el: ElementRef) {
     this.movieService.getFeaturedMovies()
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
       this.featuredMovie = movies[0];
       this.movies = movies;
       this.nowPlaying = movies.slice(0,4);
+      this.comingSoon = movies.slice(0,4);
       this.movieIds = movies.map(movie => movie._id);
     });
   }
@@ -56,5 +58,22 @@ export class HomeComponent implements OnInit {
     let myTag = this.el.nativeElement.querySelector('#min' + index)
     myTag.classList.add('padding-bottom');
   }
+
+  changeNowPlaying() {
+    if(this.isNowPlaying) {
+      let myTag = this.el.nativeElement.querySelector('#now-playing-header');
+      if(myTag.classList.contains('title-selected')) {
+        myTag.classList.remove('title-selected');
+        this.el.nativeElement.querySelector('#coming-soon-header').classList.add('title-selected');
+      }
+    } else {
+      let myTag = this.el.nativeElement.querySelector('#coming-soon-header');
+      if(myTag.classList.contains('title-selected')) {
+        myTag.classList.remove('title-selected');
+        this.el.nativeElement.querySelector('#now-playing-header').classList.add('title-selected');
+      }
+    }
+    this.isNowPlaying = this.isNowPlaying ? false : true;
+    }
 
 }
