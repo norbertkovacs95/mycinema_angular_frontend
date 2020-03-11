@@ -75,7 +75,7 @@
                     <mat-error *ngIf="formErrors.password">{{formErrors.password}}</mat-error>
                 </mat-form-field>
                 <mat-form-field fxFlex="50">
-                    <input matInput placeholder="Password again" type="password" formControlName="passwordAgain">
+                    <input matInput placeholder="Password again" type="password" formControlName="passwordAgain" [errorStateMatcher]="errorMatcher">
                     <mat-error *ngIf="formErrors.passwordAgain">{{formErrors.passwordAgain}}</mat-error>
                 </mat-form-field>
             </p>

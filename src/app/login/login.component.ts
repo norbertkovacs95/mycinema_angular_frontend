@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, ErrorStateMatcher} from '@angular/material';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { FormBuilder, FormGroup, Validators, ɵangular_packages_forms_forms_a } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReservationComponent } from '../reservation/reservation.component';
+import { MyErrorStateMatcher } from '../shared/passwordErrorMatcher';
 
-import { User } from '../shared/user';
 import { Seat } from '../shared/seat';
 import { ShowTime } from '../shared/showTime';
 import { CinemaHall } from '../shared/cinemaHall';
@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   loginError: String;
   signupError: String;
   signupForm: FormGroup;
+  errorMatcher = new MyErrorStateMatcher();
 
   userId: string;
   seats: Seat[];
@@ -89,7 +90,7 @@ export class LoginComponent implements OnInit {
     this.createSignupForm();
   }
 
-  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+  checkPasswords(group: FormGroup) { 
     let pass = group.get('password').value;
     let confirmPass = group.get('passwordAgain').value;
 
@@ -186,14 +187,11 @@ export class LoginComponent implements OnInit {
         }
       }
 
-      /*
-      this.formErrors['passwordAgain'] = '';
       if (form.get('password').dirty) {
         if (form.get('password').value !== form.get('passwordAgain').value) {
           this.formErrors['passwordAgain'] = this.validationMessages['passwordAgain']['notSame'];
         }
       }
-      */
       console.log(this.formErrors)
       
   }
