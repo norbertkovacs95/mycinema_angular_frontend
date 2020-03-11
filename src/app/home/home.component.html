@@ -32,11 +32,11 @@
             <mat-card class="nowPlaying-card" *ngFor="let movie of nowPlaying" appHighlight>
                 <img mat-card-image src={{movie.posterPath}} width="250px" height="500px" class="card-image">
                 <mat-card-actions fxLayout="row">
-                    <a mat-button color="ascent"><span class="fa fa-play fa-lg"></span></a>
+                    <a mat-button color="ascent" fxLayout="column" fxLayoutAlign="center"><span class="fa fa-play fa-lg"></span></a>
                     <span class="fill-space"></span>
-                    <h4>{{movie.title}}</h4>
+                    <h4>{{movie.title | uppercase}}</h4>
                     <span class="fill-space"></span>
-                    <a mat-button color="ascent" routerLink="/movies"><span class="fa fa-ticket fa-lg"></span></a>
+                    <a mat-button color="ascent" routerLink="/movies" fxLayout="column" fxLayoutAlign="center"><span class="fa fa-ticket fa-lg"></span></a>
                 </mat-card-actions>
             </mat-card>
         </div>
@@ -48,12 +48,12 @@
             id="card-container" *ngIf="!isNowPlaying">
             <mat-card class="nowPlaying-card" *ngFor="let movie of comingSoon" appHighlight>
                 <img mat-card-image src={{movie.posterPath}} width="250px" height="500px" class="card-image">
-                <mat-card-actions fxLayout="row">
-                    <a mat-button color="ascent"><span class="fa fa-play fa-lg"></span></a>
+                <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+                    <a mat-button color="ascent" fxLayout="column" fxLayoutAlign="center"><span class="fa fa-play fa-lg"></span></a>
                     <span class="fill-space"></span>
-                    <h4>{{movie.title}}</h4>
+                    <h4>{{movie.title | uppercase}}</h4>
                     <span class="fill-space"></span>
-                    <a mat-button color="ascent"><span class="fa fa-info-circle fa-lg"></span></a>
+                    <a mat-button color="ascent" fxLayout="column" fxLayoutAlign="center"><span class="fa fa-info-circle fa-lg"></span></a>
                 </mat-card-actions>
             </mat-card>
         </div>

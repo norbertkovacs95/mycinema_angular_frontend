@@ -4,6 +4,8 @@
 @import 'variables';
 @import '../node_modules/font-awesome/scss/font-awesome.scss';
 
+
+
 // For Dark Theme
 input {
   color: white !important;
@@ -13,6 +15,14 @@ body{
     background-color: #303030 !important;
 }
 
+$rgb: 250;
+.mat-elevation-z24 {
+    box-shadow: 0 16px 24px 2px rgba($rgb, $rgb, $rgb, 0.14), 
+                0 6px 30px 5px rgba($rgb, $rgb, $rgb, 0.12), 
+                0 8px 10px -5px rgba($rgb, $rgb, $rgb, 0.3);
+  }
+
+//
 
 body {
     padding: 0;

@@ -42,6 +42,7 @@ import { MoviesService } from './services/movies.service';
 import { ShowtimesService } from './services/showtimes.service';
 import { LoginComponent } from './login/login.component';
 import { HighlightDirective } from './directives/highlight.directive';
+import { MaterialElevationDirective } from './directives/material-elevation.directive';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { HighlightDirective } from './directives/highlight.directive';
     FooterComponent,
     ReservationComponent,
     LoginComponent,
-    HighlightDirective
+    HighlightDirective,
+    MaterialElevationDirective
   ],
   imports: [
     BrowserModule,

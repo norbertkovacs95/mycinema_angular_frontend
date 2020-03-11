@@ -27,8 +27,10 @@
     <div fxLayout="row wrap"
         fxLayout.sm="column"
         fxLayout.xs="column"
-        fxLayoutAlign="space-around center" *ngIf ="showTimes && movies">
-        <mat-card class="card" *ngFor = "let movie of filteredMovies">
+        fxLayoutAlign="space-around center"
+        fxLayoutGap="30px" 
+        *ngIf ="showTimes && movies">
+        <mat-card class="card" *ngFor = "let movie of filteredMovies" appMaterialElevation>
             <mat-card-header>
                 <div mat-card-avatar class="header-image" [style.backgroundImage]="'url('+ movie.pegiRating +')'"></div>
                 <mat-card-title>{{movie.title}}</mat-card-title>
