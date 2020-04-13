@@ -16,7 +16,11 @@ export class MoviesService {
   constructor(private http: HttpClient) { }
 
   getMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(baseURL + 'movies');
+    return this.http.get<Movie[]>(baseURL + 'movies').pipe(map(movies => movies.filter(movie => movie.nowPlaying)));
+  }
+
+  getComingSoonMovies():Observable<Movie[]> {
+    return this.http.get<Movie[]>(baseURL + 'movies').pipe(map(movies => movies.filter(movie => !movie.nowPlaying)));
   }
 
   getFeaturedMovies(): Observable<Movie[]> {

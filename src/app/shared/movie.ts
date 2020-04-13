@@ -11,4 +11,5 @@ export class Movie {
     showTimes: string[];
     featured: boolean;
     coverPath: string;
+    nowPlaying: Boolean;
 }

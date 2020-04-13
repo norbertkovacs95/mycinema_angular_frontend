@@ -1,6 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Movie } from '../shared/movie';
 import { MoviesService } from '../services/movies.service';
+import { flatMap } from 'rxjs/operators';
+import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -18,13 +20,14 @@ export class HomeComponent implements OnInit {
 
   constructor(private movieService: MoviesService, private el: ElementRef) {
     this.movieService.getFeaturedMovies()
-    .subscribe((movies) => {
-      this.featuredMovie = movies[0];
-      this.movies = movies;
-      this.nowPlaying = movies.slice(0,4);
-      this.comingSoon = movies.slice(0,4);
-      this.movieIds = movies.map(movie => movie._id);
-    });
+    .pipe(flatMap((_movies) => {
+      this.featuredMovie = _movies[0];
+      this.movies = _movies;
+      this.movieIds = _movies.map(movie => movie._id);
+      this.nowPlaying = _movies.slice(0,3);
+      return this.movieService.getComingSoonMovies();
+    }))
+    .subscribe(_movies => this.comingSoon = _movies.slice(0,3));
   }
 
   ngOnInit() {

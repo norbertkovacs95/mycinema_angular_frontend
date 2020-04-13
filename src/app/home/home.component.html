@@ -18,10 +18,10 @@
     </div>
 
     <div id="now-playing" fxLayout="column" fxLayoutAlign="center"> 
-        <div fxLayout="row" fxLayoutAlign="center"  fxLayoutGap="15px">
-            <h1 id="now-playing-header" class="now-playing-title title-selected" (click)="changeNowPlaying()">Now playing</h1>
+        <div fxLayout="row" fxLayoutAlign="center"  fxLayoutGap="15px" id="now-playing-container">
+            <a mat-button><h1 id="now-playing-header" class="now-playing-title title-selected" (click)="changeNowPlaying()">Now playing</h1></a>
             <h1 class="slash"> / </h1>
-            <h1 id="coming-soon-header" class="coming-soon-title" (click)="changeNowPlaying()">Coming soon</h1>
+            <a mat-button><h1 id="coming-soon-header" class="coming-soon-title" (click)="changeNowPlaying()">Coming soon</h1></a>
         </div>
         <div  fxLayout="row"
             fxLayout.sm="column"

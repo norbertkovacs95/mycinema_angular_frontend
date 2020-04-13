@@ -2,7 +2,8 @@
 
 .active {
     //background: #FF4081;
-    background: mat-color($accentPalette);
+    border-bottom: 3px solid mat-color($accentPalette);
+    //background: mat-color($accentPalette);
 }
 
 .active-menu{
@@ -44,6 +45,15 @@ button{
       font-weight: 400 !important;
   }
   
+  //Chnged for toolbar
   .margin-left{
-      margin-left: 5px !important;
+      margin-left: 10px !important;
+  }
+
+  a span {
+      font-size: 120% !important;
+  }
+
+  a[mat-button] {
+    border-radius: 0px !important;
   }
